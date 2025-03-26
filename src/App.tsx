@@ -8,14 +8,10 @@ import {
   Route,
   ScrollRestoration,
 } from "react-router-dom";
-// import Footer from "./components/home/Footer/Footer";
-// import FooterBottom from "./components/home/Footer/FooterBottom";
-// import Header from "./components/home/Header/Header";
-// import HeaderBottom from "./components/home/Header/HeaderBottom";
-// import SpecialCase from "./components/SpecialCase/SpecialCase";
-// import About from "./pages/About/About";
-// import SignIn from "./pages/Account/SignIn";
+// import Navbar from './components/navabr';
 import SignupScreen from './pages/auth/signUp';
+import Login from './pages/auth/login';
+import LandingPage from './pages/landing/landing';
 // import Cart from "./pages/Cart/Cart";
 // import Contact from "./pages/Contact/Contact";
 // import Home from "./pages/Home/Home";
@@ -31,19 +27,20 @@ import SignupScreen from './pages/auth/signUp';
 // import UserPage from "./pages/admin/User";
 // import SalesPage from "./pages/admin/Sales";
 
-// const Layout = () => {
-//   return (
-//     <div>
-//       <Header />
-//       <HeaderBottom />
-//       <SpecialCase />
-//       <ScrollRestoration />
-//       <Outlet />
-//       <Footer />
-//       <FooterBottom />
-//     </div>
-//   );
-// };
+const Layout = () => {
+  return (
+    <div>
+      {/* <Header />
+      <HeaderBottom />
+      <SpecialCase /> */}
+      
+      <ScrollRestoration />
+      <Outlet />
+      {/* <Footer />
+      <FooterBottom /> */}
+    </div>
+  );
+};
 
 // const AdminLayout = () => {
 //   return (
@@ -57,8 +54,9 @@ import SignupScreen from './pages/auth/signUp';
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
-      {/* <Route path="/" element={<Layout />}> */}
+      <Route path="/" element={<Layout />}>
         {/* ==================== Header Navlink Start here =================== */}
+        <Route index element={<LandingPage />}></Route>
         {/* <Route index element={<Home />}></Route>
         <Route path="/shop" element={<Shop />}></Route>
         <Route path="/about" element={<About />}></Route>
@@ -75,11 +73,11 @@ const router = createBrowserRouter(
         <Route index element={<Admin />}></Route>
         <Route path="/admin/products" element={<ProductPage />} />
         <Route path="/admin/customers" element={<UserPage />} />
-        <Route path="/admin/sales" element={<SalesPage />} />
-      </Route> */}
+        <Route path="/admin/sales" element={<SalesPage />} /> */}
+      </Route>
       {/* ==================== Admin Navlink End here ===================== */}
       <Route path="/signup" element={<SignupScreen />}></Route>
-      {/* <Route path="/signin" element={<SignIn />}></Route> */}
+      <Route path="/signin" element={<Login />}></Route>
     </Route>
   )
 );

@@ -1,101 +1,158 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import Congratulations from "./Congratulations";
 
-const SignupScreen: React.FC = () => {
+const SignupForm: React.FC = () => {
+  const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
-    fullName: '',
-    username: '',
-    email: '',
-    password: '',
+    fullName: "",
+    username: "",
+    phone: "",
+    password: "",
+    confirmPassword: "",
   });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const navigate = useNavigate(); // Initialize the navigate function
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Handle signup logic here (e.g., send data to API)
-    console.log(formData); 
+  const nextStep = () => {
+    if (step === 1) {
+      setStep(2);
+    } else if (step === 2) {
+      // Simulate successful sign-up and move to step 3
+      setStep(3);
+    }
   };
+
+  const goToLogin = () => {
+    navigate("/signin"); // Redirect to the login page when "Log in" is clicked
+  };
+
+  // If step is 3, show the Congratulations component
+  if (step === 3) {
+    return <Congratulations />;
+  }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-semibold text-center mb-6">Create an account</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="fullName">
-              Full Name
-            </label>
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <div className="w-full max-w-lg bg-white p-8 shadow-md rounded-lg">
+        <h2 className="text-2xl font-bold text-center">Create an account</h2>
+        <p className="text-center text-gray-500">
+          Already have an account?{" "}
+          <span
+            onClick={goToLogin}
+            className="text-green-500 cursor-pointer"
+          >
+            Log in
+          </span>
+        </p>
+
+        {/* Progress Bar */}
+        <div className="flex justify-evenly items-center mt-6 mb-4">
+          {[1, 2].map((s) => (
+            <div key={s} className="flex text-center">
+              <div
+                className={`w-6 h-6 flex items-center justify-center rounded-full border-2 ${
+                  s <= step
+                    ? "bg-green-500 text-white border-green-500"
+                    : "bg-gray-300 text-gray-500 border-gray-300"
+                }`}
+              >
+                {s}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Step 1 - User Info */}
+        {step === 1 && (
+          <div>
             <input
-              className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="fullName"
-              type="text"
               name="fullName"
-              placeholder="Enter your full name"
-              value={formData.fullName}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
-              Username
-            </label>
-            <input
-              className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="username"
               type="text"
+              placeholder="Enter full name"
+              className="w-full p-3 border rounded-md mb-3"
+              onChange={handleChange}
+            />
+            <input
               name="username"
-              placeholder="Choose a username"
-              value={formData.username}
+              type="text"
+              placeholder="Enter username"
+              className="w-full p-3 border rounded-md mb-3"
               onChange={handleChange}
-              required
             />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
-              Email
-            </label>
             <input
-              className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="email"
-              type="email"
-              name="email"
-              placeholder="Enter your email"
-              value={formData.email}
+              name="phone"
+              type="text"
+              placeholder="Enter phone number"
+              className="w-full p-3 border rounded-md mb-3"
               onChange={handleChange}
-              required
             />
           </div>
-          <div className="mb-6">
-            <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="password">
-              Password
-            </label>
-            <input
-              className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="password"
-              type="password"
-              name="password"
-              placeholder="Enter your password"
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
+        )}
+
+        {/* Step 2 - Password Info */}
+        {step === 2 && (
+          <div>
+            <div className="relative">
+              <input
+                name="password"
+                type={showPassword ? "text" : "password"}
+                placeholder="Enter password"
+                className="w-full p-3 border rounded-md mb-3"
+                onChange={handleChange}
+              />
+              <button
+                type="button"
+                className="absolute right-3 top-4"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
+            <div className="relative">
+              <input
+                name="confirmPassword"
+                type={showConfirmPassword ? "text" : "password"}
+                placeholder="Enter password again"
+                className="w-full p-3 border rounded-md mb-3"
+                onChange={handleChange}
+              />
+              <button
+                type="button"
+                className="absolute right-3 top-4"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              >
+                {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+              </button>
+            </div>
+            <ul className="text-xs text-gray-500">
+              <li>• Use 8 or more characters</li>
+              <li>• Use a number (e.g., 1234)</li>
+              <li>• Use upper and lowercase letters</li>
+              <li>• Use a symbol (e.g., @#$)</li>
+            </ul>
           </div>
-          <div className="flex items-center justify-center">
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="submit"
-            >
-              Submit
-            </button>
-          </div>
-        </form>
+        )}
+
+        {/* Next Button */}
+        <button
+          onClick={nextStep}
+          className={`w-full p-3 rounded-md mt-4 ${
+            step < 2 ? "bg-gray-300" : "bg-green-500 text-white"
+          }`}
+          disabled={step < 1}
+        >
+          Next
+        </button>
       </div>
     </div>
   );
 };
 
-export default SignupScreen;
+export default SignupForm;
