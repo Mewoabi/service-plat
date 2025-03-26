@@ -2,34 +2,39 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import Layout from './components/Layout/Dashboard'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+import { useUser } from './contexts/userContext';
+import Dashboard from './pages/Dashboard'
+import Contracts from './pages/Contracts'
+import Proposals from './pages/Proposals'
+import Profile from './pages/Profile'
+import JobForm from './pages/JobForm'
+import Offers from './pages/Offers'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { isAuthenticated } = useUser(); 
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Router>
+      <Layout>
+        <Routes>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/contracts" element={<Contracts />} />
+              <Route path="/proposals" element={<Proposals />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/offers" element={<Offers />} />
+              <Route path="/offers/create" element={<JobForm />} />
+              <Route path="/offers/edit/:id" element={<JobForm />} />
+              <Route path="/" element={<h1>Please log in to access the platform</h1>} />
+            <Route path="/" element={<h1>Please log in to access the platform</h1>} /> 
+        </Routes>  
+      </Layout>
+    </Router>
+  );
+
 }
 
-export default App
+
+export default App;
