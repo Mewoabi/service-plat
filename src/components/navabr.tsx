@@ -16,7 +16,7 @@ const Navbar: React.FC = () => {
           <Link to="/pro" className="hover:text-green-600 transition-colors">
             Busters Pro
           </Link>
-          <Link to="/explore" className="hover:text-green-600 transition-colors">
+          <Link to="/search" className="hover:text-green-600 transition-colors">
             Explore
           </Link>
           {/* <Link to="/docs" className="hover:text-green-600 transition-colors">
