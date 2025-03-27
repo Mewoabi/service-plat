@@ -1,5 +1,5 @@
-import './App.css';
-import './index.css';
+import "./App.css";
+import "./index.css";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -9,23 +9,10 @@ import {
   ScrollRestoration,
 } from "react-router-dom";
 // import Navbar from './components/navabr';
-import SignupScreen from './pages/auth/signUp';
-import Login from './pages/auth/login';
-import LandingPage from './pages/landing/landing';
-// import Cart from "./pages/Cart/Cart";
-// import Contact from "./pages/Contact/Contact";
-// import Home from "./pages/Home/Home";
-// import Journal from "./pages/Journal/Journal";
-// import Offer from "./pages/Offer/Offer";
-// import Payment from "./pages/payment/Payment";
-// import ProductDetails from "./pages/ProductDetails/ProductDetails";
-// import Shop from "./pages/Shop/Shop";
-// Admin
-// import Admin from "./pages/admin/admin";
-// import Navbar from "./components/admin/navbar";
-// import ProductPage from "./pages/admin/Product";
-// import UserPage from "./pages/admin/User";
-// import SalesPage from "./pages/admin/Sales";
+import SignupScreen from "./pages/auth/signUp";
+import Login from "./pages/auth/login";
+import LandingPage from "./pages/landing/landing";
+import SearchList from "./pages/search/Search";
 
 const Layout = () => {
   return (
@@ -33,7 +20,7 @@ const Layout = () => {
       {/* <Header />
       <HeaderBottom />
       <SpecialCase /> */}
-      
+
       <ScrollRestoration />
       <Outlet />
       {/* <Footer />
@@ -57,23 +44,7 @@ const router = createBrowserRouter(
       <Route path="/" element={<Layout />}>
         {/* ==================== Header Navlink Start here =================== */}
         <Route index element={<LandingPage />}></Route>
-        {/* <Route index element={<Home />}></Route>
-        <Route path="/shop" element={<Shop />}></Route>
-        <Route path="/about" element={<About />}></Route>
-        <Route path="/contact" element={<Contact />}></Route>
-        <Route path="/journal" element={<Journal />}></Route> */}
-        {/* ==================== Header Navlink End here ===================== */}
-        {/* <Route path="/offer" element={<Offer />}></Route>
-        <Route path="/product/:_id" element={<ProductDetails />}></Route>
-        <Route path="/cart" element={<Cart />}></Route>
-        <Route path="/paymentgateway" element={<Payment />}></Route>
-      </Route> */}
-      {/* ==================== Admin Navlink Start here =================== */}
-      {/* <Route path="/admin" element={<AdminLayout />}>
-        <Route index element={<Admin />}></Route>
-        <Route path="/admin/products" element={<ProductPage />} />
-        <Route path="/admin/customers" element={<UserPage />} />
-        <Route path="/admin/sales" element={<SalesPage />} /> */}
+        <Route path="/search" element={<SearchList />}></Route>
       </Route>
       {/* ==================== Admin Navlink End here ===================== */}
       <Route path="/signup" element={<SignupScreen />}></Route>
