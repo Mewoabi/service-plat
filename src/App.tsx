@@ -1,5 +1,5 @@
-import './App.css';
-import './index.css';
+import "./App.css";
+import "./index.css";
 import {
   BrowserRouter as Router,
   createBrowserRouter,
@@ -22,14 +22,10 @@ import JobForm from './pages/JobForm';
 import Offers from './pages/Offers';
 import Applications from './pages/Applications';
 import { useUser } from './contexts/userContext';
+// import Navbar from './components/navabr';
+import SearchList from "./pages/search/Search";
 
-const DashboardRouter = () => {
-  return (
-    <DashboardLayout>
-      <Outlet />
-    </DashboardLayout>
-  )
-}
+
 
 function App() {
   const { user } = useUser()
@@ -40,7 +36,11 @@ function App() {
           <Route path="/" element={<LandingPage />} />
           <Route path="/signup" element={<SignupScreen />} />
           <Route path="/signin" element={<Login />} />
-
+            {/* ==================== Header Navlink Start here =================== */}
+          {/* <Route path="/" element={<Layout />}>
+            <Route index element={<LandingPage />}></Route>
+            <Route path="/search" element={<SearchList />}></Route>
+          </Route> */}
           {/* Protected Routes */}
           <Route
             path="/dashboard"
