@@ -7,7 +7,7 @@ const Congratulations: React.FC = () => {
 
   const handleContinue = () => {
     // Redirect to the home page when "Continue" is clicked.
-    navigate("/");
+    navigate("/dashboard");
   };
 
   return (

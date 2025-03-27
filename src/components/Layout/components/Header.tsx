@@ -1,11 +1,6 @@
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
-import NotificationsRoundedIcon from '@mui/icons-material/NotificationsRounded';
-import CustomDatePicker from './CustomDatePicker';
-import MenuButton from './MenuButton';
 import { useLocation } from 'react-router-dom';
-import Search from './Search';
 import { useUser } from '../../../contexts/userContext';
+
 const menuContent: { [key: string]: string } = {
   "/": "Welcome",
   "/dashboard": "Dashboard",
@@ -20,35 +15,26 @@ export default function Header() {
   const { user } = useUser();
 
   return (
-    <Stack
-      direction="row"
-      sx={{
-        display: { xs: 'none', md: 'flex' },
-        width: '100%',
-        alignItems: { xs: 'flex-start', md: 'center' },
-        justifyContent: 'space-between',
-        maxWidth: { sm: '100%', md: '1700px' },
-        pt: 1.5,
-      }}
-      spacing={2}
-    >
-      <Stack>
-        <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
-          {pageTitle}
-        </Typography>
+    <div className="flex justify-between items-center py-4">
+      <div>
+        <h1 className="text-2xl font-bold text-gray-900">{pageTitle}</h1>
         {user && (
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            Hello, {user.email} ({user.role})
-          </Typography>
+          <p className="text-sm text-gray-600">
+            Hello, {user.username} ({user.role})
+          </p>
         )}
-      </Stack>
-      <Stack direction="row" sx={{ gap: 1 }}>
-        <Search />
-        <CustomDatePicker />
-        <MenuButton showBadge aria-label="Open notifications">
-          <NotificationsRoundedIcon />
-        </MenuButton>
-      </Stack>
-    </Stack>
+      </div>
+      <div className="flex items-center space-x-4">
+        <input
+          type="search"
+          placeholder="Search..."
+          className="rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500"
+        />
+        <button className="rounded-full p-2 hover:bg-gray-100">
+          <span className="sr-only">Notifications</span>
+          {/* Bell icon */}
+        </button>
+      </div>
+    </div>
   );
 }

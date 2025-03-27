@@ -1,18 +1,33 @@
 import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
+import { useUser } from '../../contexts/userContext';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const { setUser } = useUser();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Add your login API logic here.
-    // On successful login, redirect to the home page.
-    navigate("/");
+    
+    // Simulate login with dummy data
+    const dummyUser = {
+      id: `user${Date.now()}`,
+      email,
+      role: 'freelancer' as const,
+      fullName: 'John Doe',
+      username: 'johndoe',
+      createdAt: new Date().toISOString(),
+      // profile: {
+      //   verificationStatus: 'verified',
+      // }
+    };
+
+    setUser(dummyUser);
+    navigate('/dashboard');
   };
 
   return (

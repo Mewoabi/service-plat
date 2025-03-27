@@ -9,51 +9,38 @@ import PeopleRoundedIcon from '@mui/icons-material/PeopleRounded';
 import CategoryIcon from '@mui/icons-material/Category';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
-import {  useLocation, useNavigate } from 'react-router-dom';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const mainListItems = [
   { text: 'Home', icon: <HomeRoundedIcon />, path: "/dashboard"},
-  // { text: 'Analytics', icon: <AnalyticsRoundedIcon /> },
-  {text: 'Offers', icon: <CategoryIcon />, path: "/offers"},
-  {text: 'Proposals', icon: <InventoryIcon />, path: "/proposals"},
-  {text: 'Contracts', icon: <ReceiptLongIcon />, path: "/contracts"},
-  { text: 'Profile', icon: <PeopleRoundedIcon />, path: "/profile" },
-  // { text: 'Tasks', icon: <AssignmentRoundedIcon /> },
+  {text: 'Offers', icon: <CategoryIcon />, path: "/dashboard/offers"},
+  {text: 'Applications', icon: <AssignmentIcon />, path: "/dashboard/applications"},
+  {text: 'Proposals', icon: <InventoryIcon />, path: "/dashboard/proposals"},
+  {text: 'Contracts', icon: <ReceiptLongIcon />, path: "/dashboard/contracts"},
+  { text: 'Profile', icon: <PeopleRoundedIcon />, path: "/dashboard/profile" },
 ];
 
-// const secondaryListItems = [
-//   { text: 'Settings', icon: <SettingsRoundedIcon /> },
-//   { text: 'About', icon: <InfoRoundedIcon /> },
-//   { text: 'Feedback', icon: <HelpRoundedIcon /> },
-// ];
-
 export default function MenuContent() {
-  const location  = useLocation()
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  const navigate = useNavigate()
   return (
-    <Stack sx={{ flexGrow: 1, p: 1, justifyContent: 'space-between' }}>
-      <List dense>
-        {mainListItems.map((item, index) => (
-          <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton selected={item.path===location.pathname} onClick={() => navigate(item.path)}>
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-
-      {/* <List dense>
-        {secondaryListItems.map((item, index) => (
-          <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton>
-              <ListItemIcon>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List> */}
-    </Stack>
+    <nav className="mt-5 flex-1 px-2 space-y-1">
+      {mainListItems.map((item, index) => (
+        <button
+          key={index}
+          onClick={() => navigate(item.path)}
+          className={`${
+            location.pathname === item.path
+              ? 'bg-primary-50 text-primary-600'
+              : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+          } group flex items-center px-2 py-2 text-sm font-medium rounded-md w-full`}
+        >
+          <span className="mr-3 h-6 w-6">{item.icon}</span>
+          {item.text}
+        </button>
+      ))}
+    </nav>
   );
 }

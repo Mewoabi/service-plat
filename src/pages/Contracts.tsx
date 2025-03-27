@@ -1,9 +1,27 @@
 import { DataGrid } from '@mui/x-data-grid';
-import { contracts } from '../components/data/contracts';
-import { proposals } from '../components/data/proposals';
-import { jobs } from '../components/data/jobs';
+import { useContracts, useProposals, useJobs } from '../contexts/DataContext';
+import { useUser } from '../contexts/userContext';
 
 const Contracts = () => {
+  const { contracts } = useContracts();
+  const { proposals } = useProposals();
+  const { jobs } = useJobs();
+  const { user } = useUser();
+
+  // Filter contracts based on user role
+  const userContracts = contracts.filter(contract => {
+    const proposal = proposals.find(p => p.id === contract.proposalId);
+    if (!proposal) return false;
+
+    if (user?.role === 'freelancer') {
+      return proposal.freelancerId === user.id;
+    } else if (user?.role === 'client') {
+      const job = jobs.find(j => j.id === proposal.jobId);
+      return job?.clientId === user.id;
+    }
+    return false;
+  });
+
   const getJobDetails = (proposalId: string) => {
     const proposal = proposals.find(p => p.id === proposalId);
     if (proposal) {
@@ -16,7 +34,7 @@ const Contracts = () => {
     return null;
   };
 
-  const rows = contracts.map(contract => {
+  const rows = userContracts.map(contract => {
     const jobDetails = getJobDetails(contract.proposalId);
     return {
       id: contract.id,
@@ -35,12 +53,21 @@ const Contracts = () => {
   ];
 
   return (
-    <div style={{ height: 400, width: '100%' }}>
-      <h2>Contracts</h2>
-      <DataGrid 
-        rows={rows} 
-        columns={columns}
-      />
+    <div className="space-y-4">
+      <h2 className="text-xl font-semibold text-gray-900">Contracts</h2>
+      <div className="bg-white shadow rounded-lg">
+        <DataGrid 
+          rows={rows} 
+          columns={columns}
+          className="min-h-[500px]"
+          sx={{
+            border: 'none',
+            '& .MuiDataGrid-cell': {
+              borderBottom: '1px solid #f3f4f6',
+            }
+          }}
+        />
+      </div>
     </div>
   );
 };

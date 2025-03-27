@@ -2,29 +2,41 @@ import React, { useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import Congratulations from "./Congratulations";
+import { useAuthForm } from '../../contexts/AuthFormContext';
+import { useUser } from '../../contexts/userContext';
 
 const SignupForm: React.FC = () => {
   const [step, setStep] = useState(1);
-  const [formData, setFormData] = useState({
-    fullName: "",
-    username: "",
-    phone: "",
-    password: "",
-    confirmPassword: "",
-  });
+  const { formData, updateFormData } = useAuthForm();
+  const { setUser } = useUser();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const navigate = useNavigate(); // Initialize the navigate function
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    updateFormData({ [e.target.name]: e.target.value });
   };
 
   const nextStep = () => {
     if (step === 1) {
+      // Validate first step
+      if (!formData.fullName || !formData.username || !formData.phone) {
+        alert('Please fill all fields');
+        return;
+      }
       setStep(2);
     } else if (step === 2) {
-      // Simulate successful sign-up and move to step 3
+      // Create user account
+      const userId = `user${Date.now()}`; // Generate dummy ID
+      const newUser = {
+        id: userId,
+        ...formData,
+        createdAt: new Date().toISOString(),
+        // profile: {
+        //   verificationStatus: 'pending',
+        // }
+      };
+      setUser(newUser);
       setStep(3);
     }
   };
