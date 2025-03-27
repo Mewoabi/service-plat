@@ -42,6 +42,7 @@ function App() {
             <Route path="/search" element={<SearchList />}></Route>
           </Route> */}
           {/* Protected Routes */}
+          <Route path="/search" element={<SearchList />}></Route>
           <Route
             path="/dashboard"
             element={
