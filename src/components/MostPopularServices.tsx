@@ -51,7 +51,7 @@ const MostPopularServices: React.FC = () => {
             Most Popular Services
           </h2>
           <Link
-            to="/services"
+            to="/search"
             className="text-green-600 hover:text-green-700 font-medium"
           >
             View All
